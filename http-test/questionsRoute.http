@@ -1,0 +1,55 @@
+// ADD A NEW QUESTION
+POST http://localhost:5000/private/questions/add-question
+Content-Type: application/json
+
+{
+    "classAndStream": "633fe92840ba4c2da6ae8657",
+    "subject": "63400e9170adced303d60929",
+    "question": "This is question no 2 of mental ability subject", 
+    "questionImage":"https://picsum.photos/200/300", 
+    "option1": "Kolkata",
+    "option2":"Delhi", 
+    "option3":"Uday Pure", 
+    "option4":"Sodepur", 
+    "correctOption":"A", 
+    "answer":"Kolkata is the capital of Westbengal", 
+    "explanation":"Kolkata is the capital of Westbengal"
+}
+
+###
+
+
+// GET ALL QUESTIONS
+GET  http://localhost:5000/private/questions/get-all-questions
+Content-Type: application/json
+
+
+###
+
+// GET SINGLE QUESTIONS
+GET  http://localhost:5000/private/questions/get-single-question/634e4e7c677f78f7693e1356
+Content-Type: application/json
+
+
+###
+
+// GET ALL QUESTIONS OF A SUBJECT ID AND CLASS AND STREAM ID
+GET  http://localhost:5000/private/questions/get-all-question-by-subject/63400e1ce9fc65fe6a8f56db/633fe92840ba4c2da6ae8657
+Content-Type: application/json
+
+
+###
+
+// GET ALL QUESTIONS BY CALSS AND STREAM
+GET  http://localhost:5000/private/questions/get-all-question-by-class-and-stream/633fe92840ba4c2da6ae8657
+Content-Type: application/json
+
+
+###
+
+// DELETE SINGLE QUESTION
+DELETE  http://localhost:5000/private/questions/delete-single-question/633eb6d0105f0112db6a7f20
+Content-Type: application/json
+
+
+###

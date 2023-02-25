@@ -1,0 +1,23 @@
+// ADD A NEW SUBJECT
+POST http://localhost:5000/private/subjects/add-subject
+Content-Type: application/json
+
+{
+    "name": "physics",
+    "classAndStream": "633fed1171447a7f38151cc2"
+}
+
+###
+
+// GET ALL SUBJECTS
+GET http://localhost:5000/private/subjects/get-all-subjects
+Content-Type: application/json
+
+
+###
+// GET ALL SUBJECTS ACCORDING TO CLASS AND STREAM
+GET http://localhost:5000/private/subjects/get-subjects-by-class-stream?classAndStream=Class : 7
+Content-Type: application/json
+
+
+###

@@ -1,0 +1,54 @@
+// SUBMIT/UPDATE A ANS BY STUDENT
+POST http://localhost:5000/private/results/add-single-answer
+Content-Type: application/json
+
+{
+        "question":"63316b29acb440e15f96c6fa",
+        "student":"632aadb41b4902c3d85f9e59",
+        "ansOption":"B",
+        "isCorrect":false
+}
+
+###
+
+// GET RESULT STATISTICS FOR A SINGLE STUDENTS
+GET http://localhost:5000/private/results/get-results/statistics/632aadb41b4902c3d85f9e59
+Content-Type: application/json
+
+
+###
+
+// GET RESULT DETAILS FOR A SINGLE STUDENTS
+GET http://localhost:5000/private/results/get-results/details/632aadb41b4902c3d85f9e59/63316b29acb440e15f96c6fa
+Content-Type: application/json
+
+
+###
+
+// END TEST BY STUDENT  (UPDATE TEST STATUS)
+PUT http://localhost:5000/private/results/end-test/632aadb41b4902c3d85f9e59/?status=
+Content-Type: application/json
+
+
+###
+
+// GET SINGLE STUDENT MOCK TEST STATUS
+GET http://localhost:5000/private/results/get-mock-test-status/632aadb41b4902c3d85f9e59
+Content-Type: application/json
+
+
+###
+
+// GET SINGLE STUDENT MOCK TEST TIME LEFT
+GET http://localhost:5000/private/results/get-mock-test-timer/632aadb41b4902c3d85f9e59
+Content-Type: application/json
+
+
+###
+
+// GET SINGLE STUDENT MOCK TEST TIME LEFT
+PUT http://localhost:5000/private/results/update-mock-test-timer/632aadb41b4902c3d85f9e59?time=3595
+Content-Type: application/json
+
+
+###
