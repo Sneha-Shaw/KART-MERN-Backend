@@ -1,9 +1,9 @@
 import userModel from '../models/user.model.js'
 import { generateToken } from '../utils/generateToken.js'
-import mongoose from 'mongoose'
+// import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import env from 'dotenv'
-import isEmpty from '../utils/isEmpty.js'
+// import isEmpty from '../utils/isEmpty.js'
 
 env.config()
 
@@ -13,56 +13,208 @@ env.config()
 export const registerUser = async (req, res) => {
     try {
         const {
-            username,
             email,
             password,
             mobile
         } = req.body
 
-        if (isEmpty(username) || isEmpty(email) || isEmpty(password)) {
-            return res.status(400).json({
-                success: false,
-                message: 'All fields are required'
+        const checkEmail = await userModel.findOne({
+            email
+        })
+        if (!checkEmail) {
+            console.log(email);
+            const hashedPassword = await bcrypt.hash(password, 12);
+            const createUserAccount = await userModel.create({
+                email,
+                password: hashedPassword,
+                mobile
             })
-        }
-        else {
-            const checkEmail = await userModel.findOne({
-                email
-            })
-            if (checkEmail) {
-                const createUserAccount = await userModel.create({
-                    username,
-                    email,
-                    password,
-                    mobile
+            if (createUserAccount) {
+                console.log(createUserAccount);
+                res.json({
+                    success: true,
+                    _id: createUserAccount._id,
+                    email: createUserAccount.email,
+                    mobile: createUserAccount.mobile
                 })
-                if (createUserAccount) {
-                    res.json({
-                        _id: createUserAccount._id,
-                        name: createUserAccount.username,
-                        email: createUserAccount.email,
-                        mobile: createUserAccount.mobile
-                    })
-                }
-                else {
-                    res.status(400).json({
-                        success: false,
-                        message: 'Invalid user data'
-                    })
-                }
             }
             else {
                 res.status(400).json({
                     success: false,
-                    message: 'User already exists'
+                    message: 'Invalid user data'
                 })
             }
+        }
+        else {
+            res.status(400).json({
+                success: false,
+                message: 'User already exists'
+            })
         }
     }
     catch (err) {
         res.status(500).json({
             success: false,
-            message: error.message
+            message: err.message
+        })
+    }
+}
+
+// @route: POST /public/auth/login
+// @desc: Login user
+// @access: Public
+export const loginUser = async (req, res) => {
+    try {
+        const {
+            email,
+            password
+        } = req.body
+
+        const checkEmail = await userModel.findOne({
+            email
+        })
+
+        if (checkEmail) {
+            const isMatch = await bcrypt.compare(password, checkEmail.password)
+            if (isMatch) {
+                res.json({
+                    success: true,
+                    _id: checkEmail._id,
+                    email: checkEmail.email,
+                    mobile: checkEmail.mobile,
+                    token: generateToken(checkEmail._id)
+                })
+            }
+            else {
+                res.status(400).json({
+                    success: false,
+                    message: 'Wrong password'
+                })
+            }
+        }
+
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+// @route: GET /public/auth/profile/:id
+// @desc: Get user profile
+// @access: Private
+export const getUserProfile = async (req, res) => {
+    try {
+        const id = req.params.id
+        console.log(id);
+        const user = await userModel.findById(id)
+        if (user) {
+            res.json(
+                {
+                    success: true,
+                    user
+                }
+            )
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+// @route: POST /public/auth/update/:id
+// @desc: Update user profile
+// @access: Private
+export const updateUserProfile = async (req, res) => {
+    try {
+        const id = req.params.id
+        const {
+            name,
+            email,
+            mobile,
+            address,
+            pincode,
+            city,
+            state,
+            Landmark,
+            altMobile,
+            AddressType
+        } = req.body
+
+        const user = await userModel.findById(id)
+        if (user) {
+            user.name = name || user.name
+            user.email = email || user.email
+            user.mobile = mobile || user.mobile
+            user.address = address || user.address
+            user.pincode = pincode || user.pincode
+            user.city = city || user.city
+            user.state = state || user.state
+            user.Landmark = Landmark || user.Landmark
+            user.altMobile = altMobile || user.altMobile
+            user.AddressType = AddressType || user.AddressType
+
+            const updatedUser = await user.save()
+            res.json({
+                success: true,
+                user: updatedUser
+            })
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+// @route: POST /public/auth/reset-password/:id
+// @desc: Reset user password
+// @access: Private
+export const resetPassword = async (req, res) => {
+    try {
+        const { password } = req.body
+        const id = req.params.id
+        
+        const user = await userModel.findById(id)
+        if (user) {
+            const hashedPassword = await bcrypt.hash(password, 12);
+            user.password = hashedPassword
+            const updatedUser = await user.save()
+            res.json({
+                success: true,
+                user: updatedUser
+            })
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
         })
     }
 }

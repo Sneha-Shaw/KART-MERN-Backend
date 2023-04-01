@@ -1,9 +1,8 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
-    username: {
+    name: {
         type: String,
-        unique: true,
         trim: true,
     },
     email: {
@@ -19,7 +18,7 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     mobile: {
-        type: Number
+        type: String
     },
     address: {
         type: String

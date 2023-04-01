@@ -10,9 +10,6 @@ import cors from 'cors'
 import helmet from 'helmet'
 import ExpressMongoSanitize from 'express-mongo-sanitize'
 
-// IMPORTS ALL CUSTOM MIDDLEWARES
-import { notFound } from './middlewares/errorMiddleware.js'
-
 //IMPORT ALL ROUTES
 import homeRoute from './routes/home.route.js'
 import PrivateRouter from './routes/private/index.js'
@@ -24,6 +21,7 @@ env.config()
 // set security HTTP headers
 app.use(helmet())
 
+// prevent http parameter pollution
 app.disable('x-powered-by')
 // parse urlencoded request body
 app.use(express.urlencoded({ limit: '69mb' }))
@@ -58,9 +56,6 @@ app.use('/', homeRoute)
 // PRIVATE ROUTE
 app.use('/private', PrivateRouter)
 app.use('/public', PublicRouter)
-
-// custom middleware
-app.use(notFound)
 
 // Server Listen
 const PORT = process.env.PORT || 5000
