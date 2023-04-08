@@ -3,7 +3,7 @@ POST http://localhost:5000/public/auth/register
 Content-Type: application/json
 
 {
-    "email":"snehashaw122@gmail.com",
+    "email":"sneha@gmail.com",
     "password": "12345",
     "mobile": 8777829385
 }
@@ -15,20 +15,20 @@ POST http://localhost:5000/public/auth/login
 Content-Type: application/json
 
 {
-    "email":"snehashaw122@gmail.com",
-    "password": "123"
+    "email":"sneha122@gmail.com",
+    "password": "1234"
 }
 
 ###
 
 # GET USER
-GET http://localhost:5000/public/auth/profile/6407404e06ffa7fd7b8c1d50
+GET http://localhost:5000/public/auth/profile/6427e646c260690bd24a27ff
 Content-Type: application/json
 
 ###
 
 # UPDATE USER
-PUT http://localhost:5000/public/auth/update/6407404e06ffa7fd7b8c1d50
+PUT http://localhost:5000/public/auth/update/6427e646c260690bd24a27ff
 Content-Type: application/json
 
 {
@@ -38,7 +38,7 @@ Content-Type: application/json
 ###
 
 # RESET PASSWORD
-PUT http://localhost:5000/public/auth/reset-password/6407404e06ffa7fd7b8c1d50
+PUT http://localhost:5000/public/auth/reset-password/6427e646c260690bd24a27ff
 Content-Type: application/json
 
 {

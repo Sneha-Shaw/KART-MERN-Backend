@@ -244,14 +244,23 @@ export const addToWishlist = async (req, res) => {
 // @access: Public
 export const getWishlist = async (req, res) => {
     try {
-        const userId = req.params.userid
-        
-        const wishlist = await wishlistModel.find({ user: userId }).populate('product')
-        console.log(wishlist);
-        res.status(200).json({
-            success: true,
-            wishlist
-        })
+
+        const { id } = req.params
+
+        const wishlist = await wishlistModel.find({ user: id }).populate('product')
+
+        if (!wishlist) {
+            return res.status(404).json({
+                success: false,
+                message: "Wishlist not found"
+            })
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                wishlist
+            })
+        }
 
     }
     catch (err) {
@@ -273,7 +282,7 @@ export const removeFromWishlist = async (req, res) => {
         const productId = req.params.productId
 
         //find by id in wishlist
-        const checkWishlist = await wishlistModel.findById({ userId })
+        const checkWishlist = await wishlistModel.find({ user: userId })
 
         if (!checkWishlist) {
             res.status(404).json({
@@ -283,8 +292,8 @@ export const removeFromWishlist = async (req, res) => {
         }
         else {
             //    delete productId
-            const wishlist = await wishlistModel.findByIdAndDelete({ userId, productId })
-
+            const wishlist = await wishlistModel.findOneAndDelete({ user: userId, product: productId })
+            console.log(wishlist);
             res.status(200).json({
                 success: true,
                 message: "Product removed from wishlist successfully",
@@ -351,16 +360,26 @@ export const addToCart = async (req, res) => {
             })
         }
         else {
-            const cart = await cartModel.create({
-                user: userId,
-                product: productId
-            })
+            const checkCart = await cartModel.find({ user: userId, product: productId })
+            if (!checkCart) {
+                const cart = await cartModel.create({
+                    user: userId,
+                    product: productId
+                })
 
-            res.status(200).json({
-                success: true,
-                message: "Product added to cart successfully",
-                cart
-            })
+                res.status(200).json({
+                    success: true,
+                    message: "Product added to cart successfully",
+                    cart
+                })
+            }
+            else {
+                res.status(200).json({
+                    success: true,
+                    message: "Product already in cart",
+                    cart: checkCart
+                })
+            }
         }
     }
     catch (err) {
@@ -376,8 +395,10 @@ export const addToCart = async (req, res) => {
 // @access: Public
 export const getCart = async (req, res) => {
     try {
-        const userId = req.params.userid
-        const cart = await cartModel.find({ user: userId }).populate('product')
+        const {
+            id
+        } = req.params
+        const cart = await cartModel.find({ user: id }).populate('product')
         res.status(200).json({
             success: true,
             cart
@@ -402,7 +423,7 @@ export const removeFromCart = async (req, res) => {
         const productId = req.params.productId
 
         //find by id in cart
-        const checkCart = await cartModel.findById({ userId })
+        const checkCart = await cartModel.find({ user: userId })
 
         if (!checkCart) {
             res.status(404).json({
@@ -411,9 +432,9 @@ export const removeFromCart = async (req, res) => {
             })
         }
         else {
-            const cart = await cartModel.findByIdAndDelete({
-                userId,
-                productId
+            const cart = await cartModel.findOneAndDelete({
+                user: userId,
+                product: productId
             })
 
             res.status(200).json({

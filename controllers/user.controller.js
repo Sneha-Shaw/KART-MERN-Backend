@@ -24,11 +24,13 @@ export const registerUser = async (req, res) => {
         if (!checkEmail) {
             console.log(email);
             const hashedPassword = await bcrypt.hash(password, 12);
+            console.log(hashedPassword);
             const createUserAccount = await userModel.create({
                 email,
                 password: hashedPassword,
                 mobile
             })
+            console.log(createUserAccount);
             if (createUserAccount) {
                 console.log(createUserAccount);
                 res.json({
@@ -91,6 +93,12 @@ export const loginUser = async (req, res) => {
                     message: 'Wrong password'
                 })
             }
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
         }
 
     }
@@ -193,7 +201,7 @@ export const resetPassword = async (req, res) => {
     try {
         const { password } = req.body
         const id = req.params.id
-        
+
         const user = await userModel.findById(id)
         if (user) {
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -212,6 +220,55 @@ export const resetPassword = async (req, res) => {
         }
     }
     catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+// add address
+export const addAddress = async (req, res) => {
+    try {
+        const { name,
+            address,
+            city,
+            state,
+            pincode,
+            altMobile,
+            landmark,
+            AddressType } = req.body
+
+        const id = req.params.id
+        const user = await userModel.findById(id)
+        if (!user) {
+            res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+        else {
+
+            const updated = await userModel.findByIdAndUpdate({
+                _id: id
+            }, {
+                name: name,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                altMobile: altMobile,
+                landmark: landmark,
+                AddressType: AddressType
+            })
+
+            res.status(200).json({
+                success: true,
+                message: 'Address added successfully'
+            })
+        }
+
+    } catch (err) {
         res.status(500).json({
             success: false,
             message: err.message

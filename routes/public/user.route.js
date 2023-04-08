@@ -5,7 +5,8 @@ import {
     loginUser,
     getUserProfile,
     updateUserProfile,
-    resetPassword
+    resetPassword,
+    addAddress
 } from '../../controllers/user.controller.js'
 
 const router = express.Router()
@@ -18,5 +19,7 @@ router.get('/profile/:id', getUserProfile)
 router.put('/update/:id', updateUserProfile)
 
 router.put('/reset-password/:id', resetPassword)
+
+router.post('/add-address/:id', addAddress)
 
 export default router

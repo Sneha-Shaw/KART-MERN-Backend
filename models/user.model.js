@@ -11,13 +11,15 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     avatar: {
         type: String,
     },
     mobile: {
+        type: String
+    },
+    altMobile: {
         type: String
     },
     address: {

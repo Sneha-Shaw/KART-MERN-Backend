@@ -1,3 +1,35 @@
-// REGISTER USER
+// GET ALL PRODUCTS
 GET http://localhost:5000/public/products/all
 Content-Type: application/json
+
+###
+
+// GET PRODUCT BY ID
+GET http://localhost:5000/public/products/get-single-product/63666c85a9cd7e8bb75538f3
+Content-Type: application/json
+
+###
+
+# ADD TO WISHLIST
+POST http://localhost:5000/public/products/add-product-to-wishlist/64317a14f2a5ba39fe3682cf/635a901388ec4d63160e3c9b
+Content-Type: application/json
+
+###
+
+# GET WISHLIST
+GET http://localhost:5000/public/products/wishlist-products/6427e646c260690bd24a27ff
+Content-Type: application/json
+
+###
+
+#REMOVE FROM WISHLIST
+POST http://localhost:5000/public/products/remove-from-wishlist/64317a14f2a5ba39fe3682cf/635a901388ec4d63160e3c9b
+Content-Type: application/json
+
+###
+
+#CHECK IN WISHLIST
+GET http://localhost:5000/public/products/check-product-in-wishlist/64317a14f2a5ba39fe3682cf/635a901388ec4d63160e3c9b
+Content-Type: application/json
+
+###
