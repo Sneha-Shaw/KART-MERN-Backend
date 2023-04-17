@@ -321,8 +321,8 @@ export const checkProductInWishlist = async (req, res) => {
         const checkWishlist = await wishlistModel.findOne({ user: userId, product: productId })
 
         if (!checkWishlist) {
-            return res.status(404).json({
-                success: false,
+            return res.status(200).json({
+                success: true,
                 message: "Product not found in wishlist",
                 isPresent: false
             })
