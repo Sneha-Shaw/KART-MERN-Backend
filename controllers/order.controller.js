@@ -55,7 +55,7 @@ export const createOrder = async (req, res) => {
 
             // remove product from cart by id
 
-            const cart = await cartModel.findOneAndDelete({ user: userId },{product:productId})
+            const cart = await cartModel.findOneAndDelete({ user: userId }, { product: productId })
 
             return res.status(200).json({
                 success: true,
@@ -126,12 +126,12 @@ export const getAllOrder = async (req, res) => {
  * @access private
  */
 export const cancelOrder = async (req, res) => {
-    try{
-        const {id} = req.params
+    try {
+        const { id } = req.params
 
         const order = await orderModel.findById(id)
 
-        if(!order){
+        if (!order) {
             return res.status(400).json({
                 success: false,
                 message: "Order not found"
@@ -140,20 +140,20 @@ export const cancelOrder = async (req, res) => {
 
         const deletedOrder = await orderModel.findByIdAndDelete(id)
 
-        if(deletedOrder){
+        if (deletedOrder) {
             return res.status(200).json({
                 success: true,
                 message: "Order deleted successfully"
             })
         }
-        else{
+        else {
             return res.status(400).json({
                 success: false,
                 message: "Order not deleted"
             })
         }
     }
-    catch(error){
+    catch (error) {
         res.status(500).json({
             success: false,
             message: error.message
@@ -167,22 +167,22 @@ export const cancelOrder = async (req, res) => {
  * @access private
  */
 export const searchOrder = async (req, res) => {
-    try{
-        const {userId} = req.params
-        const {keyword} = req.query
+    try {
+        const { userId } = req.params
+        const { keyword } = req.query
 
         const user = await userModel.findById(userId)
 
-        if(!user){
+        if (!user) {
             return res.status(400).json({
                 success: false,
                 message: "User not found"
             })
         }
 
-        const orders = await orderModel.find({user:userId}).populate('product')
-        
-        if(orders){
+        const orders = await orderModel.find({ user: userId }).populate('product')
+
+        if (orders) {
             const search = orders.filter(order => order.product.title.toLowerCase().includes(keyword.toLowerCase()))
 
             return res.status(200).json({
@@ -191,14 +191,14 @@ export const searchOrder = async (req, res) => {
                 data: search
             })
         }
-        else{
+        else {
             return res.status(400).json({
                 success: false,
                 message: "Order not found"
             })
         }
     }
-    catch(error){
+    catch (error) {
         res.status(500).json({
             success: false,
             message: error.message
@@ -213,22 +213,22 @@ export const searchOrder = async (req, res) => {
  * @access private
  */
 export const filterOrder = async (req, res) => {
-    try{
-        const {userId} = req.params
-        const {status} = req.query
+    try {
+        const { userId } = req.params
+        const { status } = req.query
 
         const user = await userModel.findById(userId)
 
-        if(!user){
+        if (!user) {
             return res.status(400).json({
                 success: false,
                 message: "User not found"
             })
         }
 
-        const orders = await orderModel.find({user:userId}).populate('product')
-        
-        if(orders){
+        const orders = await orderModel.find({ user: userId }).populate('product')
+
+        if (orders) {
             const filter = orders.filter(order => order.status.toLowerCase().includes(status.toLowerCase()))
 
             return res.status(200).json({
@@ -237,14 +237,14 @@ export const filterOrder = async (req, res) => {
                 data: filter
             })
         }
-        else{
+        else {
             return res.status(400).json({
                 success: false,
                 message: "Order not found"
             })
         }
     }
-    catch(error){
+    catch (error) {
         res.status(500).json({
             success: false,
             message: error.message
