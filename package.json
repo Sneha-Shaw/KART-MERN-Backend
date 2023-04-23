@@ -20,7 +20,9 @@
     "helmet": "^6.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.5.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "razorpay": "^2.8.6",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

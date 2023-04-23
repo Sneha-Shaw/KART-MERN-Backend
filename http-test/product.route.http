@@ -5,7 +5,7 @@ Content-Type: application/json
 ###
 
 // GET PRODUCT BY ID
-GET http://localhost:5000/public/products/get-single-product/63666c85a9cd7e8bb75538f3
+GET http://localhost:5000/public/products/get-single-product/635a901388ec4d63160e3c9b
 Content-Type: application/json
 
 ###
@@ -33,3 +33,6 @@ GET http://localhost:5000/public/products/check-product-in-wishlist/64317a14f2a5
 Content-Type: application/json
 
 ###
+
+# ADD TO CART
+POST http://localhost:5000/public/products/add-to-cart/64317a14f2a5ba39fe3682cf/63666c85a9cd7e8bb75538f3

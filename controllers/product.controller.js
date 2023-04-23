@@ -360,7 +360,9 @@ export const addToCart = async (req, res) => {
             })
         }
         else {
-            const checkCart = await cartModel.find({ user: userId, product: productId })
+            // check cart if something present replace with current one
+            const checkCart = await cartModel.findOne({ user: userId })
+
             if (!checkCart) {
                 const cart = await cartModel.create({
                     user: userId,
@@ -374,10 +376,12 @@ export const addToCart = async (req, res) => {
                 })
             }
             else {
+                const cart = await cartModel.findOneAndUpdate({ user: userId }, { product: productId }, { new: true })
+
                 res.status(200).json({
                     success: true,
-                    message: "Product already in cart",
-                    cart: checkCart
+                    message: "Product added to cart successfully",
+                    cart
                 })
             }
         }
