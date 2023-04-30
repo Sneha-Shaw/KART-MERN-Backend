@@ -1,49 +1,67 @@
 import mongoose from 'mongoose'
 
 const productSchema = new mongoose.Schema({
-    title:{
+    title: {
         type: String,
         required: true,
         trim: true
     },
-    description:{
+    description: {
         type: String,
         required: true,
         trim: true
     },
-    price:{
+    price: {
         type: Number,
         required: true,
         trim: true
     },
-    category:{
+    category: {
         type: Array,
         required: true,
         trim: true
     },
-    image:{
+    featureimg: {
         type: Array,
-        default:["https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"]
+        default: ["https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"]
     },
-    brand:{
+    brand: {
         type: String,
         required: true,
         trim: true
     },
-    rating:{
+    rating: {
         type: Number,
         trim: true,
         default: 0
     },
-    numReviews:{
+    numReviews: {
         type: Number,
         trim: true,
         default: 0
     },
-    countInStock:{
+    countInStock: {
         type: Number,
         trim: true,
         default: 0
+    },
+    reviews: [{
+        name: { type: String },
+        rating: { type: Number },
+        comment: { type: String },
+        createdAt: { type: Date, default: Date.now }
+    }],
+    color: {
+        type: Array,
+    },
+    size: {
+        type: Array
+    },
+    type: {
+        type: String,
+    },
+    metaTags: {
+        type: Array
     }
 },
     { timestamps: true }

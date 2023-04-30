@@ -40,7 +40,6 @@ const userSchema = new mongoose.Schema({
     },
     AddressType: {
         type: String,
-        enum: ['home', 'office', 'other'],
         default: 'home'
     }
 
