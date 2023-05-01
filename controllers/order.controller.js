@@ -138,18 +138,22 @@ export const cancelOrder = async (req, res) => {
             })
         }
 
-        const deletedOrder = await orderModel.findByIdAndDelete(id)
+        const cancelledOrder = await orderModel.findById(id)
 
-        if (deletedOrder) {
+        cancelledOrder.status = "cancelled"
+
+        const cancelled = await cancelledOrder.save()
+
+        if (cancelled) {
             return res.status(200).json({
                 success: true,
-                message: "Order deleted successfully"
+                message: "Order cancelled successfully"
             })
         }
         else {
             return res.status(400).json({
                 success: false,
-                message: "Order not deleted"
+                message: "Order not cancelled"
             })
         }
     }
