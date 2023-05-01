@@ -18,33 +18,36 @@ export const addProduct = async (req, res) => {
             description,
             price,
             category,
-            image,
-            brand
+            featureimg,
+            brand,
+            size,
+            color,
+            countInStock,
+            type,
+            metaTags
         } = req.body
 
-        if (isEmpty(title) || isEmpty(description) || isEmpty(price) || isEmpty(category) || isEmpty(image) || isEmpty(brand)) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required"
-            })
-        }
 
-        else {
-            const product = await productModel.create({
-                title,
-                description,
-                price,
-                category,
-                image,
-                brand
-            })
+        const product = await productModel.create({
+            title,
+            description,
+            price,
+            category,
+            featureimg,
+            brand,
+            size,
+            color,
+            countInStock,
+            type,
+            metaTags
+        })
 
-            res.status(200).json({
-                success: true,
-                message: "Product added successfully",
-                product
-            })
-        }
+        res.status(200).json({
+            success: true,
+            message: "Product added successfully",
+            product
+        })
+
 
     }
     catch (err) {

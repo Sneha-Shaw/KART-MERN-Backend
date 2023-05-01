@@ -1,3 +1,22 @@
+# ADD PRODUCT
+POST http://localhost:5000/public/products/add-product
+Content-Type: application/json
+
+{
+   "title":"Harpa Women Maxi A-Line Dress",
+   "description":"Closure Type: Tie; Material Composition: 100% Polyester; Department Name: Women; Occasion Type: Casual",
+   "price": "694",
+   "category":"Women",
+   "featureimg":["https://m.media-amazon.com/images/I/613QQUEWx0L._UX679_.jpg","https://m.media-amazon.com/images/I/61g9FdfFEqL._UX679_.jpg"],
+   "brand":"Harpa",
+   "size":["S","M"],
+    "color":["Blue"],
+    "countInStock": 20,
+    "type":"dresses",
+    "metaTags":["women","dresses","casual"]
+}
+
+####
 // GET ALL PRODUCTS
 GET http://localhost:5000/public/products/all
 Content-Type: application/json
