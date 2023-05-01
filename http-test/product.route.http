@@ -55,3 +55,15 @@ Content-Type: application/json
 
 # ADD TO CART
 POST http://localhost:5000/public/products/add-to-cart/64317a14f2a5ba39fe3682cf/63666c85a9cd7e8bb75538f3
+
+###
+
+# add review
+POST http://localhost:5000/public/products/add-review/63666c85a9cd7e8bb75538f3
+Content-Type: application/json
+
+{
+    "userName":"John",
+    "rating": 3,
+    "comment": "average product"
+}

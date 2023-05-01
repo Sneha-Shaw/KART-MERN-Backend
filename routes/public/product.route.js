@@ -16,6 +16,10 @@ import {
     getCart,
 } from '../../controllers/product.controller.js'
 
+import {
+    addReview
+} from '../../controllers/rating.controller.js'
+
 const router = express.Router()
 
 router.get('/all', getAllProducts)
@@ -34,5 +38,7 @@ router.put('/update-product/:id', updateProduct)
 router.post('/remove-from-wishlist/:userId/:productId', removeFromWishlist)
 router.delete('/remove-from-cart/:userId/:productId', removeFromCart)
 router.delete('/delete-product/:id', deleteProduct)
+
+router.post('/add-review/:id', addReview)
 
 export default router

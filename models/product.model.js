@@ -3,22 +3,22 @@ import mongoose from 'mongoose'
 const productSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
+
         trim: true
     },
     description: {
         type: String,
-        required: true,
+
         trim: true
     },
     price: {
         type: Number,
-        required: true,
+
         trim: true
     },
     category: {
         type: String,
-        required: true,
+
         trim: true
     },
     featureimg: {
@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
     },
     brand: {
         type: String,
-        required: true,
+
         trim: true
     },
     rating: {
@@ -35,18 +35,24 @@ const productSchema = new mongoose.Schema({
         trim: true,
         default: 0
     },
-    numReviews: {
+    totalReviews: {
         type: Number,
         trim: true,
         default: 0
     },
+    numRatings: [
+        {
+            star: { type: Number },
+            count: { type: Number }
+        }
+    ],
     countInStock: {
         type: Number,
         trim: true,
         default: 0
     },
     reviews: [{
-        name: { type: String },
+        userName: { type: String },
         rating: { type: Number },
         comment: { type: String },
         createdAt: { type: Date, default: Date.now }
