@@ -465,7 +465,13 @@ export const removeFromCart = async (req, res) => {
 export const searchProducts = async (req, res) => {
     try {
         const keyword = req.query.keyword
-        const products = await productModel.find({ title: { $regex: keyword, $options: 'i' } })
+        const products = await productModel.find({ 
+            $or: [
+                { name: { $regex: keyword, $options: 'i' } },
+                { description: { $regex: keyword, $options: 'i' } },
+                { metaTags: { $regex: keyword, $options: 'i' } }
+            ]
+         })
         res.status(200).json({
             success: true,
             products
