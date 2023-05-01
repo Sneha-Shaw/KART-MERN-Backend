@@ -48,6 +48,13 @@ export const createOrder = async (req, res) => {
             address
         })
 
+        console.log(product.countInStock);
+
+        product.countInStock -= 1
+        console.log(product.countInStock, "after");
+
+        await product.save()
+
         const createdOrder = await order.save()
 
 
@@ -99,10 +106,13 @@ export const getAllOrder = async (req, res) => {
         const orders = await orderModel.find({ user: userId }).populate('product')
 
         if (orders) {
+            //   return orders by sorting
+            const sorted = orders.sort((a, b) => b.createdAt - a.createdAt)
+
             return res.status(200).json({
                 success: true,
                 message: "Order found",
-                data: orders
+                data: sorted
             })
         }
         else {
